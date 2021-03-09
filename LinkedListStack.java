@@ -2,7 +2,7 @@ package assign06;
 
 import java.util.NoSuchElementException;
 
-public class LinkedListStack implements Stack{
+public class LinkedListStack<E> implements Stack<E> {
 
 	@Override
 	public void clear() {

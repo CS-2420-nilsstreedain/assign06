@@ -3,10 +3,23 @@ package assign06;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class SinglyLinkedList implements List {
+public class SinglyLinkedList<E> implements List<E> {
+	
+	private class Node<E> {
+		public E data;
+		public Node next;
+		public Node(E data, Node next) {
+			this.data = data;
+			this.next = next;
+		}
+	}
+	
+	private Node head;
+	private int elementCount;
 	
 	public SinglyLinkedList() {
-		
+		head = new Node(null, null);
+		elementCount = 0;
 	}
 
 	@Override
@@ -22,25 +35,25 @@ public class SinglyLinkedList implements List {
 	}
 
 	@Override
-	public Object getFirst() throws NoSuchElementException {
+	public E getFirst() throws NoSuchElementException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object get(int index) throws IndexOutOfBoundsException {
+	public E get(int index) throws IndexOutOfBoundsException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object deleteFirst() throws NoSuchElementException {
+	public E deleteFirst() throws NoSuchElementException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object delete(int index) throws IndexOutOfBoundsException {
+	public E delete(int index) throws IndexOutOfBoundsException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -76,9 +89,32 @@ public class SinglyLinkedList implements List {
 	}
 
 	@Override
-	public Iterator iterator() {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterator<E> iterator() {
+		return new SinglyLinkedListIterator();
+	}
+	
+	private class SinglyLinkedListIterator implements Iterator<E> {
+		
+		public SinglyLinkedListIterator() {
+			
+		}
+
+		@Override
+		public boolean hasNext() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public E next() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
+		public void remove() {
+			
+		}
+		
 	}
 
 }
