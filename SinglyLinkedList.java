@@ -3,63 +3,82 @@ package assign06;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class SinglyLinkedList<E> implements List<E> {
+public class SinglyLinkedList<T> implements List<T> {
 	
 	private class Node<E> {
 		public E data;
-		public Node next;
-		public Node(E data, Node next) {
+		public Node<E> next;
+		
+		public Node(E data, Node<E> next) {
 			this.data = data;
 			this.next = next;
 		}
 	}
 	
-	private Node head;
+	private Node<T> head;
 	private int elementCount;
 	
 	public SinglyLinkedList() {
-		head = new Node(null, null);
+		head = new Node<T>(null, null);
 		elementCount = 0;
 	}
 
 	@Override
-	public void insertFirst(Object element) {
-		// TODO Auto-generated method stub
-		
+	public void insertFirst(T element) {
+		head.next = new Node<T>(element, head.next);
+		elementCount++;
+	}
+
+	private Node<T> getPrevNode(int index) {
+		Node<T> temp = head.next;
+		for(int i = 0; i < index - 1; i++)
+			temp = temp.next;
+		return temp;
+	}
+	
+	private void insert(T element, Node<T> prevNode) {
+		prevNode.next = new Node<T>(element, prevNode.next);
+		elementCount++;
+	}
+	
+	@Override
+	public void insert(int index, T element) throws IndexOutOfBoundsException {
+		if (index < 0 || index > elementCount)
+			throw new IndexOutOfBoundsException();
+		if (index == 0)
+			insertFirst(element);
+		else
+			insert(element, getPrevNode(index));
 	}
 
 	@Override
-	public void insert(int index, Object element) throws IndexOutOfBoundsException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public E getFirst() throws NoSuchElementException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public E get(int index) throws IndexOutOfBoundsException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public E deleteFirst() throws NoSuchElementException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public E delete(int index) throws IndexOutOfBoundsException {
+	public T getFirst() throws NoSuchElementException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int indexOf(Object element) {
+	public T get(int index) throws IndexOutOfBoundsException {
+		Node<T> temp = head.next;
+		for(int i = 0; i < index; i++)
+			temp = temp.next;
+		return temp.data;
+	}
+
+	@Override
+	public T deleteFirst() throws NoSuchElementException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public T delete(int index) throws IndexOutOfBoundsException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int indexOf(T element) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -83,17 +102,17 @@ public class SinglyLinkedList<E> implements List<E> {
 	}
 
 	@Override
-	public Object[] toArray() {
+	public T[] toArray() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Iterator<E> iterator() {
+	public Iterator<T> iterator() {
 		return new SinglyLinkedListIterator();
 	}
 	
-	private class SinglyLinkedListIterator implements Iterator<E> {
+	private class SinglyLinkedListIterator implements Iterator<T> {
 		
 		public SinglyLinkedListIterator() {
 			
@@ -106,7 +125,7 @@ public class SinglyLinkedList<E> implements List<E> {
 		}
 
 		@Override
-		public E next() {
+		public T next() {
 			// TODO Auto-generated method stub
 			return null;
 		}
