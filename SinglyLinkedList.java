@@ -3,21 +3,30 @@ package assign06;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * A SinglyLinkedList for generic type that implements List and extends
+ * Iterable.
+ * 
+ * @author Paul Nuffer, Nils Streedain
+ * @version March 11, 2021
+ *
+ * @param <T> the type of elements contained in this SinglyLinkedList
+ */
 public class SinglyLinkedList<T> implements List<T> {
-	
+
 	private class Node<E> {
 		public E data;
 		public Node<E> next;
-		
+
 		public Node(E data, Node<E> next) {
 			this.data = data;
 			this.next = next;
 		}
 	}
-	
+
 	private Node<T> head;
 	private int elementCount;
-	
+
 	public SinglyLinkedList() {
 		head = new Node<T>(null, null);
 		elementCount = 0;
@@ -31,16 +40,16 @@ public class SinglyLinkedList<T> implements List<T> {
 
 	private Node<T> getPrevNode(int index) {
 		Node<T> temp = head.next;
-		for(int i = 0; i < index - 1; i++)
+		for (int i = 0; i < index - 1; i++)
 			temp = temp.next;
 		return temp;
 	}
-	
+
 	private void insert(T element, Node<T> prevNode) {
 		prevNode.next = new Node<T>(element, prevNode.next);
 		elementCount++;
 	}
-	
+
 	@Override
 	public void insert(int index, T element) throws IndexOutOfBoundsException {
 		if (index < 0 || index > elementCount)
@@ -53,7 +62,7 @@ public class SinglyLinkedList<T> implements List<T> {
 
 	@Override
 	public T getFirst() throws NoSuchElementException {
-		if(elementCount == 0)
+		if (elementCount == 0)
 			throw new NoSuchElementException();
 		return head.next.data;
 	}
@@ -61,14 +70,14 @@ public class SinglyLinkedList<T> implements List<T> {
 	@Override
 	public T get(int index) throws IndexOutOfBoundsException {
 		Node<T> temp = head.next;
-		for(int i = 0; i < index; i++)
+		for (int i = 0; i < index; i++)
 			temp = temp.next;
 		return temp.data;
 	}
 
 	@Override
 	public T deleteFirst() throws NoSuchElementException {
-		if (elementCount == 0) 
+		if (elementCount == 0)
 			throw new NoSuchElementException();
 		T temp = head.next.data;
 		head.next = head.next.next;
@@ -89,7 +98,7 @@ public class SinglyLinkedList<T> implements List<T> {
 	@Override
 	public int indexOf(T element) {
 		int index = -1;
-		for (int i = 0; i < elementCount; i++) 
+		for (int i = 0; i < elementCount; i++)
 			if (get(i).equals(element))
 				index = i;
 		return index;
@@ -112,38 +121,54 @@ public class SinglyLinkedList<T> implements List<T> {
 	}
 
 	@Override
-	public T[] toArray() {
-		// TODO Auto-generated method stub
-		return null;
+	public Object[] toArray() {
+		Object[] array = new Object[elementCount];
+		for (int i = 0; i < elementCount; i++)
+			array[i] = get(i);
+
+		return array;
 	}
 
 	@Override
 	public Iterator<T> iterator() {
 		return new SinglyLinkedListIterator();
 	}
-	
+
 	private class SinglyLinkedListIterator implements Iterator<T> {
-		
+		private int nextIndex;
+		private boolean okToRemove;
+
 		public SinglyLinkedListIterator() {
-			
+			nextIndex = 0;
+			okToRemove = false;
 		}
 
 		@Override
 		public boolean hasNext() {
-			// TODO Auto-generated method stub
-			return false;
+			return nextIndex < elementCount;
 		}
 
 		@Override
 		public T next() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-		
-		public void remove() {
-			
-		}
-		
-	}
+			if (!hasNext())
+				throw new NoSuchElementException();
 
+			okToRemove = true;
+
+			T nextElement = get(nextIndex);
+			nextIndex++;
+
+			return nextElement;
+		}
+
+		public void remove() {
+			if (!okToRemove)
+				throw new IllegalStateException();
+
+			nextIndex--;
+			elementCount--;
+
+			delete(nextIndex);
+		}
+	}
 }
