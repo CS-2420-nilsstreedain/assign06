@@ -53,8 +53,9 @@ public class SinglyLinkedList<T> implements List<T> {
 
 	@Override
 	public T getFirst() throws NoSuchElementException {
-		// TODO Auto-generated method stub
-		return null;
+		if(elementCount == 0)
+			throw new NoSuchElementException();
+		return head.next.data;
 	}
 
 	@Override
@@ -67,38 +68,47 @@ public class SinglyLinkedList<T> implements List<T> {
 
 	@Override
 	public T deleteFirst() throws NoSuchElementException {
-		// TODO Auto-generated method stub
-		return null;
+		if (elementCount == 0) 
+			throw new NoSuchElementException();
+		T temp = head.next.data;
+		head.next = head.next.next;
+		elementCount--;
+		return temp;
 	}
 
 	@Override
 	public T delete(int index) throws IndexOutOfBoundsException {
-		// TODO Auto-generated method stub
-		return null;
+		if (index < 0 || index > elementCount)
+			throw new IndexOutOfBoundsException();
+		T temp = get(index);
+		getPrevNode(index).next = getPrevNode(index).next.next;
+		elementCount--;
+		return temp;
 	}
 
 	@Override
 	public int indexOf(T element) {
-		// TODO Auto-generated method stub
-		return 0;
+		int index = -1;
+		for (int i = 0; i < elementCount; i++) 
+			if (get(i).equals(element))
+				index = i;
+		return index;
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return elementCount;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return elementCount == 0;
 	}
 
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		head.next = null;
+		elementCount = 0;
 	}
 
 	@Override
