@@ -274,6 +274,9 @@ public class SinglyLinkedList<T> implements List<T> {
 		private Node<T> nextNode;
 		private boolean okToRemove;
 
+		/**
+		 * Creates a new iterator for the current SinglyLinkedList
+		 */
 		public SinglyLinkedListIterator() {
 			currNode = head;
 			nextNode = head.next;
@@ -282,11 +285,21 @@ public class SinglyLinkedList<T> implements List<T> {
 			okToRemove = false;
 		}
 
+		/**
+		 * Determines if a next element exists by checking if the nextNode is null
+		 * 
+		 * @return true if a next element exists, false otherwise
+		 */
 		@Override
 		public boolean hasNext() {
 			return nextNode != null;
 		}
 
+		/**
+		 * Increments the current element, and returns the new current element
+		 * 
+		 * @return the new current element, the element that was incremented to
+		 */
 		@Override
 		public T next() {
 			if (!hasNext())
@@ -303,6 +316,10 @@ public class SinglyLinkedList<T> implements List<T> {
 			return currNode.data;
 		}
 
+		/**
+		 * Removes the current element. Next be called each time before this method can
+		 * be called.
+		 */
 		public void remove() {
 			if (!okToRemove || elementCount < 1)
 				throw new IllegalStateException();
