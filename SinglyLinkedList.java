@@ -230,23 +230,28 @@ public class SinglyLinkedList<T> implements List<T> {
 		return new SinglyLinkedListIterator();
 	}
 
-	/**This iterator iterates over the elements in this list in proper sequence (from first 
+	/**
+	 * This iterator iterates over the elements in this list in proper sequence (from first 
 	 * element to last element), and also contains a remove method.
 	 * @author Paul Nuffer, Nils Streedain
 	 *
 	 */
 	private class SinglyLinkedListIterator implements Iterator<T> {
-		private int nextIndex;
+		private Node<T> prevNode;
+		private Node<T> currNode;
+		private Node<T> nextNode;
 		private boolean okToRemove;
 
 		public SinglyLinkedListIterator() {
-			nextIndex = 0;
+			prevNode = head;
+			currNode = prevNode.next;
+			nextNode = currNode.next;
 			okToRemove = false;
 		}
 
 		@Override
 		public boolean hasNext() {
-			return nextIndex < elementCount;
+			return currNode != null;
 		}
 
 		@Override
@@ -256,20 +261,23 @@ public class SinglyLinkedList<T> implements List<T> {
 
 			okToRemove = true;
 
-			T nextElement = get(nextIndex);
-			nextIndex++;
-
-			return nextElement;
+			prevNode = currNode;
+			currNode = nextNode;
+			nextNode = nextNode.next;
+			
+			return prevNode.data;
 		}
 
 		public void remove() {
-			if (!okToRemove)
+			if (!okToRemove || elementCount < 1)
 				throw new IllegalStateException();
 
-			nextIndex--;
+			prevNode.next = nextNode;
+			
+			currNode = nextNode;
+			nextNode = nextNode.next;
+			
 			elementCount--;
-
-			delete(nextIndex);
 		}
 	}
 }
