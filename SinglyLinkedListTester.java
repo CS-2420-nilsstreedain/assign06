@@ -325,4 +325,30 @@ class SinglyLinkedListTester {
 			emptyIntegerList.clear();
 		}
 	}
+	
+// ITERATOR TESTS
+	
+// hasNext() Tests	
+	@Test
+	void emptyHasNext() {
+		Iterator<Integer> emptyIterator = emptyIntegerList.iterator();
+		assertFalse(emptyIterator.hasNext());
+		
+	}
+	
+	@Test
+	void oneHasNext() {
+		Iterator<Integer> oneIterator = oneIntegerList.iterator();
+		assertTrue(oneIterator.hasNext());
+	}
+	
+// forEach Loop Test	
+	@Test
+	void forEachTest() {
+		int total = 0;
+		for (int i : smallIntegerList) 
+			total += i;
+		assertEquals(10, total);
+	}
+
 }

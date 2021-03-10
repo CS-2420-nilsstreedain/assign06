@@ -250,7 +250,7 @@ public class SinglyLinkedList<T> implements List<T> {
 
 		@Override
 		public boolean hasNext() {
-			return currNode != null;
+			return nextNode != null;
 		}
 
 		@Override
