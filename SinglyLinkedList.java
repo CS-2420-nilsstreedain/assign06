@@ -58,8 +58,8 @@ public class SinglyLinkedList<T> implements List<T> {
 	 * @return the node previous to the node at index
 	 */
 	private Node<T> getPrevNode(int index) {
-		Node<T> temp = head.next;
-		for (int i = 0; i < index - 1; i++)
+		Node<T> temp = head;
+		for (int i = -1; i < index - 1; i++)
 			temp = temp.next;
 		return temp;
 	}

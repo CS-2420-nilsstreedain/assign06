@@ -149,6 +149,54 @@ class SinglyLinkedListTester {
 		});
 	}
 	
+//delete() tests
+	
+	@Test
+	void deleteOutOfBounds() {
+		assertThrows(IndexOutOfBoundsException.class, () -> {
+			oneIntegerList.delete(-1);
+		});
+		assertThrows(IndexOutOfBoundsException.class, () -> {
+			oneIntegerList.delete(1);
+		});
+	}
+	
+	@Test
+	void deleteOneElement() {
+		assertEquals(1, oneIntegerList.delete(0));
+		assertEquals(0, oneIntegerList.size());
+	}
+	
+	@Test
+	void deleteMiddleElement() {
+		assertEquals(2, smallIntegerList.delete(2));
+		assertEquals(4, smallIntegerList.size());
+	}
+	
+	@Test
+	void deleteManyElements() {
+		for (int i = 0; i < 100; i++) 
+			emptyIntegerList.insertFirst(i);
+		for (int i = 99; i >= 0; i--) 
+			assertEquals(99-i, emptyIntegerList.delete(i));
+		assertEquals(0, emptyIntegerList.size());
+		for (int i = 0; i < 100; i++) 
+			emptyIntegerList.insertFirst(i);
+		for (int i = 0; i < 100; i++) 
+			assertEquals(99-i, emptyIntegerList.delete(0));
+		assertEquals(0, emptyIntegerList.size());
+	}
+	
+	@Test
+	void deleteRandomElements() {
+		for (int i = 0; i < 100; i++) 
+			emptyIntegerList.insertFirst(i);
+		for (int i = 0; i < 100; i++) {
+			int randIndex = rng.nextInt(100-i);
+			assertEquals(emptyIntegerList.get(randIndex), emptyIntegerList.delete(randIndex));
+		}
+	}
+	
 	
 
 }
