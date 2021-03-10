@@ -168,11 +168,10 @@ public class SinglyLinkedList<T> implements List<T> {
 	 */
 	@Override
 	public int indexOf(T element) {
-		int index = -1;
 		for (int i = 0; i < elementCount; i++)
 			if (get(i).equals(element))
-				index = i;
-		return index;
+				return i;
+		return -1;
 	}
 
 	/**

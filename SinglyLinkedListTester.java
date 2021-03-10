@@ -1,7 +1,9 @@
 package assign06;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Random;
 
@@ -197,6 +199,130 @@ class SinglyLinkedListTester {
 		}
 	}
 	
-	
+// indexOf() Tests
+	@Test
+	void noIndexOfElement() {
+		assertEquals(-1, smallIntegerList.indexOf(5));
+	}
 
+	@Test
+	void firstIndexOfElement() {
+		assertEquals(0, smallIntegerList.indexOf(4));
+	}
+
+	@Test
+	void lastIndexOfElement() {
+		assertEquals(4, smallIntegerList.indexOf(0));
+	}
+
+	@Test
+	void duplicateIndexOfElement() {
+		for (int i = 0; i < 10; i++)
+			emptyIntegerList.insertFirst(0);
+		
+		assertEquals(0, emptyIntegerList.indexOf(0));
+	}
+	
+	@Test
+	void randomIndexOfElement() {
+		for (int i = 0; i < 100; i++)
+			emptyIntegerList.insert(i, i);
+		for (int i = 0; i < 100; i++) {
+			int randIndex = rng.nextInt(100);
+			assertEquals(randIndex, emptyIntegerList.indexOf(randIndex));
+		}
+	}
+	
+// size() Tests
+	@Test
+	void emptyListSize() {
+		assertEquals(0, emptyIntegerList.size());
+	}
+	
+	@Test
+	void randomListSize() {
+		for (int i = 0; i < 100; i++) {
+			int randSize = rng.nextInt(100);
+			
+			for (int j = 0; j < randSize; j++)
+				emptyIntegerList.insertFirst(1);
+			
+			assertEquals(randSize, emptyIntegerList.size());
+			emptyIntegerList.clear();
+		}
+	}
+	
+	@Test
+	void randomListSizeAndDeletions() {
+		for (int i = 0; i < 100; i++) {
+			int randSize = rng.nextInt(100);
+			int randDeletions = rng.nextInt(randSize + 1);
+			
+			for (int j = 0; j < randSize; j++)
+				emptyIntegerList.insertFirst(1);
+			for (int j = 0; j < randDeletions; j++)
+				emptyIntegerList.deleteFirst();
+			
+			assertEquals(randSize - randDeletions, emptyIntegerList.size());
+			emptyIntegerList.clear();
+		}
+	}
+	
+// isEmpty() Tests
+	@Test
+	void emptyListIsEmpty() {
+		assertTrue(emptyIntegerList.isEmpty());
+	}
+	
+	@Test
+	void largeListIsEmpty() {
+		assertFalse(smallIntegerList.isEmpty());
+	}
+	
+// clear() Tests
+	@Test
+	void clearEmptyList() {
+		emptyIntegerList.clear();
+		assertTrue(emptyIntegerList.isEmpty());
+	}
+	
+	@Test
+	void clearSmallIntegerList() {
+		smallIntegerList.clear();
+		assertTrue(smallIntegerList.isEmpty());
+	}
+	
+	@Test
+	void clearRandomSizeAndIntegerList() {
+		for (int i = 0; i < 100; i++) {
+			int randSize = rng.nextInt(100);
+			for (int j = 0; j < randSize; j++)
+				emptyIntegerList.insertFirst(rng.nextInt(100));
+			emptyIntegerList.clear();
+			assertTrue(emptyIntegerList.isEmpty());
+		}
+	}
+	
+// toArray() Tests
+	@Test
+	void emptyListToArray() {
+		assertArrayEquals(new Integer[] {}, emptyIntegerList.toArray());
+	}
+	
+	@Test
+	void randomizedListToArray() {
+		for (int i = 0; i < 100; i++) {
+			int randSize = rng.nextInt(100);
+			Integer[] array = new Integer[randSize];
+			
+			for (int j = 0; j < randSize; j++) {
+				int randValue = rng.nextInt(100);
+				emptyIntegerList.insert(j, randValue);
+				array[j] = randValue;
+			}
+			
+			assertArrayEquals(array, emptyIntegerList.toArray());
+			emptyIntegerList.clear();
+		}
+	}
 }
