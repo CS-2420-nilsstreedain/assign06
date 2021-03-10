@@ -17,19 +17,19 @@ public class LinkedListStack<E> implements Stack<E> {
 	}
 
 	@Override
-	public Object peek() throws NoSuchElementException {
+	public E peek() throws NoSuchElementException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Object pop() throws NoSuchElementException {
+	public E pop() throws NoSuchElementException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void push(Object element) {
+	public void push(E element) {
 		// TODO Auto-generated method stub
 		
 	}
