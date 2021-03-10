@@ -342,13 +342,86 @@ class SinglyLinkedListTester {
 		assertTrue(oneIterator.hasNext());
 	}
 	
+// next() Tests
+	@Test
+	void emptyNext() {
+		Iterator<Integer> emptyIterator = emptyIntegerList.iterator();
+		assertThrows(NoSuchElementException.class, () -> {
+			emptyIterator.next();
+		});
+	}
+	
+	@Test
+	void oneNext() {
+		Iterator<Integer> oneIterator = oneIntegerList.iterator();
+		assertEquals(1, oneIterator.next());
+	}
+	
+	@Test
+	void smallNext() {
+		Iterator<Integer> smallIterator = smallIntegerList.iterator();
+		assertEquals(4, smallIterator.next());
+		assertEquals(3, smallIterator.next());
+		assertEquals(2, smallIterator.next());
+		assertEquals(1, smallIterator.next());
+		assertEquals(0, smallIterator.next());
+	}
+	
+	@Test
+	void smallNextOutOfBounds() {
+		Iterator<Integer> smallIterator = smallIntegerList.iterator();
+		smallIterator.next();
+		smallIterator.next();
+		smallIterator.next();
+		smallIterator.next();
+		smallIterator.next();
+		assertThrows(NoSuchElementException.class, () -> {
+			smallIterator.next();
+		});
+	}
+	
+// remove() Tests
+	@Test
+	void emptyRemove() {
+		Iterator<Integer> emptyIterator = emptyIntegerList.iterator();
+		assertThrows(IllegalStateException.class, () -> {
+			emptyIterator.remove();
+		});
+	}
+	
+	@Test
+	void oneRemove() {
+		Iterator<Integer> oneIterator = oneIntegerList.iterator();
+		assertThrows(IllegalStateException.class, () -> {
+			oneIterator.remove();
+		});
+		oneIterator.next();
+		oneIterator.remove();
+		assertEquals(0, oneIntegerList.size());
+		
+	}
+	
+	@Test
+	void smallRemove() {
+		Iterator<Integer> smallIterator = smallIntegerList.iterator();
+		smallIterator.next();
+		smallIterator.next();
+		smallIterator.next();
+		smallIterator.next();
+		smallIterator.next();
+		smallIterator.remove();
+		assertEquals(4, smallIntegerList.size());
+	}
+	
+	
 // forEach Loop Test	
 	@Test
 	void forEachTest() {
+		smallIntegerList.insert(0, 1);
 		int total = 0;
 		for (int i : smallIntegerList) 
 			total += i;
-		assertEquals(10, total);
+		assertEquals(11, total);
 	}
 
 }

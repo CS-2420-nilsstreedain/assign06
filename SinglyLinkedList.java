@@ -242,9 +242,8 @@ public class SinglyLinkedList<T> implements List<T> {
 		private boolean okToRemove;
 
 		public SinglyLinkedListIterator() {
-			prevNode = head;
-			currNode = prevNode.next;
-			nextNode = currNode.next;
+			currNode = head;
+			nextNode = head.next;
 			okToRemove = false;
 		}
 
@@ -264,7 +263,7 @@ public class SinglyLinkedList<T> implements List<T> {
 			currNode = nextNode;
 			nextNode = nextNode.next;
 			
-			return prevNode.data;
+			return currNode.data;
 		}
 
 		public void remove() {
@@ -274,8 +273,10 @@ public class SinglyLinkedList<T> implements List<T> {
 			prevNode.next = nextNode;
 			
 			currNode = nextNode;
-			nextNode = nextNode.next;
+			if (nextNode != null)
+				nextNode = nextNode.next;
 			
+			okToRemove = false;
 			elementCount--;
 		}
 	}
