@@ -1,7 +1,7 @@
 package assign06;
 
 /**
- * This class collects running times for methods of ArrayListSorter.
+ * This class collects running times for methods of LinkedListStack and ArrayStack.
  * 
  * @author Erin Parker, Paul Nuffer, Nils Streedain
  * @version February 9, 2021
