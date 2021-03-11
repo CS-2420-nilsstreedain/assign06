@@ -1,7 +1,5 @@
 package assign06;
 
-import java.util.ArrayList;
-
 /**
  * This class collects running times for methods of ArrayListSorter.
  * 
@@ -11,12 +9,12 @@ import java.util.ArrayList;
 public class StackComparisonTimer {
 	
 	public static void main(String[] args) {
-		System.out.println("\nN\tnanoTime\tT(N)/N\t\tT(N)/NlogN\tT(N)/N^2");
+		System.out.println("\nN\t\tnanoTime");
 		
 		int incr = 100000000;
 		for(int probSize = 100000000; probSize <= 2000000000; probSize += incr) {
 			
-			int timesToLoop = 10000;
+			int timesToLoop = 100000000;
 
 			// First, spin computing stuff until one second has gone by.
 			// This allows this thread to stabilize.
@@ -37,6 +35,7 @@ public class StackComparisonTimer {
 			// Capture the cost of running the loop and any other operations done
 			// above that are not the essential method call being timed.
 			for(int i = 0; i < timesToLoop; i++) {
+				@SuppressWarnings("unused")
 				LinkedListStack<Integer> listStack = new LinkedListStack<>();
 			}
 
@@ -47,12 +46,7 @@ public class StackComparisonTimer {
 			// Average it over the number of runs.
 			double averageTime = ((midpointTime - startTime) - 
 						(stopTime - midpointTime)) / (double) timesToLoop;
-			System.out.println(
-					probSize + "\t" + 
-					String.format("%.5f", averageTime) + "\t" +
-					String.format("%.5f", (averageTime / probSize)) + "\t" +
-					String.format("%.5f", (averageTime / (probSize * (Math.log10(probSize) / Math.log10(2))))) + "\t" +
-					String.format("%.5f", (averageTime / (probSize * probSize))));
+			System.out.println(probSize + "\t" + averageTime);
 		}
 	}
 }
