@@ -11,8 +11,8 @@ public class StackComparisonTimer {
 	public static void main(String[] args) {
 		System.out.println("\nN\t\tnanoTime");
 		
-		int incr = 20000;
-		for(int probSize = 2000000; probSize <= 20000000; probSize += incr) {
+		int incr = 100000;
+		for(int probSize = 100000; probSize <= 15000000; probSize += incr) {
 			
 			int timesToLoop = 100000;
 
@@ -29,9 +29,9 @@ public class StackComparisonTimer {
 		//		listStack.push(0);
 			
 			//ArrayStack Push Setup
-			ArrayStack<Integer> arrayStack = new ArrayStack<>();
-			for (int i = 0; i < probSize; i++) 
-				arrayStack.push(0);
+		//	ArrayStack<Integer> arrayStack = new ArrayStack<>();
+		//	for (int i = 0; i < probSize; i++) 
+		//		arrayStack.push(0);
 			
 			//ListStack Pop Setup
 		//	LinkedListStack<Integer> listStack = new LinkedListStack<>();
@@ -44,9 +44,9 @@ public class StackComparisonTimer {
 		//		arrayStack.push(0);
 			
 			//ListStack Peek Setup
-		//	LinkedListStack<Integer> listStack = new LinkedListStack<>();
-		//	for (int i = 0; i < probSize; i++) 
-		//		listStack.push(0);
+			LinkedListStack<Integer> listStack = new LinkedListStack<>();
+			for (int i = 0; i < probSize; i++) 
+				listStack.push(0);
 			
 			//ArrayStack Peek Setup
 		//	ArrayStack<Integer> arrayStack = new ArrayStack<>();
@@ -58,18 +58,16 @@ public class StackComparisonTimer {
 			for(int i = 0; i < timesToLoop; i++) {
 		//		listStack.push(0);
 				
-				arrayStack.push(0);
+		//		arrayStack.push(0);
 				
 		//		listStack.pop();
 				
 		//		arrayStack.pop();	
-						 
-		//		listStack.peek();
 				
-		//		ArrayStack<Integer> arrayStack = new ArrayStack<>();
-		//		arrayStack.push(i);
-		//		for (int j = 0; j < 10000000; j++) 
-		//			arrayStack.peek();
+				for (int j = 0; j < 1000000000; j++)
+					listStack.peek();
+				 
+		//		arrayStack.peek();
 			}
 
 			midpointTime = System.nanoTime();
@@ -86,6 +84,7 @@ public class StackComparisonTimer {
 		//		ArrayStack Pop no subtract			
 				
 		//		ListStack Peek no subtract
+				for (int j = 0; j < 1000000000; j++) {}
 				
 		//		ArrayStack Peek no subtract		
 						
@@ -97,7 +96,7 @@ public class StackComparisonTimer {
 			// Average it over the number of runs.
 			double averageTime = ((midpointTime - startTime) - 
 						(stopTime - midpointTime)) / (double) timesToLoop;
-			System.out.println(probSize + "\t" + averageTime);
+			System.out.println(probSize + "\t" + String.format("%.5f", averageTime));
 		}
 	}
 }
