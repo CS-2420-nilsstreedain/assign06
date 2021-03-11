@@ -21,7 +21,7 @@ public class StackComparisonTimer {
 
 			long stopTime, midpointTime, startTime = System.nanoTime();
 
-			while(System.nanoTime() - startTime < 1000000000) {}
+			while(System.nanoTime() - startTime < Integer.MAX_VALUE) {}
 
 			// Collect running times.
 			startTime = System.nanoTime();
