@@ -16,18 +16,17 @@ public class StackComparisonTimer {
 			
 			int timesToLoop = 100000000;
 
-			// First, spin computing stuff until one second has gone by.
-			// This allows this thread to stabilize.
-
 			long stopTime, midpointTime, startTime = System.nanoTime();
 
+			// First, spin computing stuff until one second has gone by.
+			// This allows this thread to stabilize.
 			while(System.nanoTime() - startTime < Integer.MAX_VALUE) {}
 
 			// Collect running times.
 			startTime = System.nanoTime();
 			for(int i = 0; i < timesToLoop; i++) {
-				LinkedListStack<Integer> listStack = new LinkedListStack<>();
-				listStack.push(i);
+				ArrayStack<Integer> stack = new ArrayStack<>();
+				stack.push(i);
 			}
 
 			midpointTime = System.nanoTime();
@@ -36,7 +35,7 @@ public class StackComparisonTimer {
 			// above that are not the essential method call being timed.
 			for(int i = 0; i < timesToLoop; i++) {
 				@SuppressWarnings("unused")
-				LinkedListStack<Integer> listStack = new LinkedListStack<>();
+				ArrayStack<Integer> stack = new ArrayStack<>();
 			}
 
 			stopTime = System.nanoTime();
@@ -44,8 +43,8 @@ public class StackComparisonTimer {
 			// Compute the time, subtract the cost of running the loop
 			// from the cost of running the loop and searching.
 			// Average it over the number of runs.
-			double averageTime = ((midpointTime - startTime) - 
-						(stopTime - midpointTime)) / (double) timesToLoop;
+			double averageTime = ((midpointTime - startTime) - (stopTime - midpointTime)) / (double) timesToLoop;
+			
 			System.out.println(probSize + "\t" + averageTime);
 		}
 	}
