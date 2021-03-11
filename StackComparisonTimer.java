@@ -11,10 +11,10 @@ public class StackComparisonTimer {
 	public static void main(String[] args) {
 		System.out.println("\nN\t\tnanoTime");
 		
-		int incr = 100000000;
-		for(int probSize = 100000000; probSize <= 2000000000; probSize += incr) {
+		int incr = 20000;
+		for(int probSize = 2000000; probSize <= 20000000; probSize += incr) {
 			
-			int timesToLoop = 10000000;
+			int timesToLoop = 100000;
 
 			// First, spin computing stuff until one second has gone by.
 			// This allows this thread to stabilize.
@@ -22,6 +22,16 @@ public class StackComparisonTimer {
 			long stopTime, midpointTime, startTime = System.nanoTime();
 
 			while(System.nanoTime() - startTime < Integer.MAX_VALUE) {}
+			
+			//ListStack Push Setup
+		//	LinkedListStack<Integer> listStack = new LinkedListStack<>();
+		//	for (int i = 0; i < probSize; i++) 
+		//		listStack.push(0);
+			
+			//ArrayStack Push Setup
+			ArrayStack<Integer> arrayStack = new ArrayStack<>();
+			for (int i = 0; i < probSize; i++) 
+				arrayStack.push(0);
 			
 			//ListStack Pop Setup
 		//	LinkedListStack<Integer> listStack = new LinkedListStack<>();
@@ -46,13 +56,9 @@ public class StackComparisonTimer {
 			// Collect running times.
 			startTime = System.nanoTime();
 			for(int i = 0; i < timesToLoop; i++) {
-				LinkedListStack<Integer> listStack = new LinkedListStack<>();
-				for (int j = 0; j < 3; j++)
-					listStack.push(i);
+		//		listStack.push(0);
 				
-		//		ArrayStack<Integer> arrayStack = new ArrayStack<>();
-		//		for (int j = 0; j < 3; j++)
-		//			arrayStack.push(i);
+				arrayStack.push(0);
 				
 		//		listStack.pop();
 				
@@ -71,27 +77,21 @@ public class StackComparisonTimer {
 			// Capture the cost of running the loop and any other operations done
 			// above that are not the essential method call being timed.
 			for(int i = 0; i < timesToLoop; i++) {
-		//		LinkedListStack<Integer> listStack = new LinkedListStack<>();
-		//		for (int j = 0; j < 3; j++) {}
+		//		ListStack Push no subtract
 				
-		//		ArrayStack<Integer> arrayStack = new ArrayStack<>();
-		//		for (int j = 0; j < 3; j++) {}
+		//		ArrayStack Push no subtract
 
-		//		LinkedList Pop no subtract
+		//		ListStack Pop no subtract
 				
 		//		ArrayStack Pop no subtract			
 				
 		//		ListStack Peek no subtract
 				
 		//		ArrayStack Peek no subtract		
-				
-		//		ArrayStack<Integer> arrayStack = new ArrayStack<>();
-		//		arrayStack.push(i);
-				
+						
 			}
 
 			stopTime = System.nanoTime();
-
 			// Compute the time, subtract the cost of running the loop
 			// from the cost of running the loop and searching.
 			// Average it over the number of runs.
