@@ -2,6 +2,7 @@ package assign06;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.NoSuchElementException;
 import java.util.Random;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +13,7 @@ class LinkedListStackTester {
 	private LinkedListStack<Integer> emptyStack;
 	private LinkedListStack<Integer> oneElementStack;
 	private LinkedListStack<Integer> smallStack;
-	private LinkedListStack<Integer> largeStack;
+	private LinkedListStack<Integer> largeRandomStack;
 	
 	private Random rng = new Random();
 
@@ -27,9 +28,9 @@ class LinkedListStackTester {
 		for (int i = 0; i < 5; i++)
 			smallStack.push(i);
 		
-		largeStack = new LinkedListStack<>();
+		largeRandomStack = new LinkedListStack<>();
 		for (int i = 0; i < 100; i++)
-			largeStack.push(rng.nextInt(100));
+			largeRandomStack.push(rng.nextInt(100));
 	}
 
 	
@@ -57,9 +58,9 @@ class LinkedListStackTester {
 	
 	@Test
 	void clearLargeStack() {
-		largeStack.clear();
+		largeRandomStack.clear();
 		
-		assertTrue(largeStack.isEmpty());
+		assertTrue(largeRandomStack.isEmpty());
 	}
 	
 	@Test
@@ -76,4 +77,121 @@ class LinkedListStackTester {
 			assertTrue(emptyStack.isEmpty());
 		}
 	}
+	
+// peek() Tests
+	@Test
+	void peekEmptyStack() {
+		assertThrows(NoSuchElementException.class, () -> {
+			emptyStack.peek();
+		});
+	}
+	
+	@Test
+	void peekOneStack() {
+		assertEquals(1, oneElementStack.peek());
+	}
+	
+	@Test
+	void peekSmallStack() {
+		assertEquals(4, smallStack.peek());
+		smallStack.pop();
+		assertEquals(3, smallStack.peek());
+	}
+	
+// pop() Tests
+	@Test
+	void popEmptyStack() {
+		assertThrows(NoSuchElementException.class, () -> {
+			emptyStack.pop();
+		});
+	}
+	
+	@Test
+	void popOneStack() {
+		assertEquals(1, oneElementStack.pop());
+	}
+	
+	@Test
+	void popSmallStack() {
+		assertEquals(4, smallStack.pop());
+		assertEquals(3, smallStack.pop());
+	}
+	
+	@Test
+	void popSmallStackToEmpty() {
+		for (int i = 0; i < 5; i++)
+			smallStack.pop();
+		assertTrue(smallStack.isEmpty());
+	}
+	
+	@Test
+	void popSmallStackSizeChange() {
+		smallStack.pop();
+		assertEquals(4, smallStack.size());
+		smallStack.pop();
+		assertEquals(3, smallStack.size());
+		
+	}
+	
+//push() Tests
+	@Test
+	void pushEmptyStack() {
+		emptyStack.push(0);
+		assertEquals(0, emptyStack.peek());
+	}
+	
+	@Test
+	void pushOneStack() {
+		oneElementStack.push(99);
+		assertEquals(99, oneElementStack.peek());
+	}
+	
+	@Test
+	void pushSmallStack() {
+		smallStack.push(99);
+		assertEquals(99, smallStack.peek());
+	}
+	
+	@Test 
+	void pushSizeChange() {
+		emptyStack.push(0);
+		assertEquals(1, emptyStack.size());
+		emptyStack.push(0);
+		assertEquals(2, emptyStack.size());
+		emptyStack.push(0);
+		assertEquals(3, emptyStack.size());
+	}
+	
+	@Test
+	void pushSizeChangeMany() {
+		for (int i = 0; i < 1000; i++) {
+			assertEquals(i, emptyStack.size());
+			emptyStack.push(i);
+		}
+	}
+	
+//size() Tests	
+	@Test
+	void emptySize() {
+		assertEquals(0, emptyStack.size());
+	}
+	
+	@Test
+	void oneSize() {
+		assertEquals(1, oneElementStack.size());
+	}
+	
+	@Test
+	void smallSize() {
+		assertEquals(5, smallStack.size());
+	}
+
+	@Test
+	void sizeUpdate() {
+		for (int i = 0; i < 1000; i++) {
+			assertEquals(i, emptyStack.size());
+			emptyStack.push(0);
+		}
+	}
+	
 }
