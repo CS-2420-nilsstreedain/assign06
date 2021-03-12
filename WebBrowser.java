@@ -4,7 +4,7 @@ import java.net.URL;
 import java.util.NoSuchElementException;
 
 public class WebBrowser {
-	
+
 	private ArrayStack<URL> backHistory;
 	private ArrayStack<URL> forwardHistory;
 	private URL currentURL;
@@ -32,9 +32,9 @@ public class WebBrowser {
 	public WebBrowser(SinglyLinkedList<URL> history) {
 		backHistory = new ArrayStack<>();
 		forwardHistory = new ArrayStack<>();
-		for(URL temp : history)
+		for (URL temp : history)
 			forwardHistory.push(temp);
-		while(forwardHistory.size() != 0)
+		while (forwardHistory.size() != 0)
 			backHistory.push(forwardHistory.pop());
 		currentURL = backHistory.pop();
 	}
@@ -47,7 +47,7 @@ public class WebBrowser {
 	 * @param webpage - the url of the webpage to 'visit'
 	 */
 	public void visit(URL webpage) {
-		if (currentURL != null) 
+		if (currentURL != null)
 			backHistory.push(currentURL);
 		currentURL = webpage;
 		forwardHistory.clear();
@@ -65,7 +65,7 @@ public class WebBrowser {
 		URL prevURL = backHistory.pop();
 		forwardHistory.push(currentURL);
 		currentURL = prevURL;
-		
+
 		return currentURL;
 
 	}
@@ -81,7 +81,7 @@ public class WebBrowser {
 		URL forwardURL = forwardHistory.pop();
 		backHistory.push(currentURL);
 		currentURL = forwardURL;
-		
+
 		return currentURL;
 	}
 
@@ -92,29 +92,28 @@ public class WebBrowser {
 	 * browser. "Forward" links are not included. The behavior of the method must be
 	 * O(N), where N is the number of URLs.
 	 * 
-	 * @return a history of URLs visited, as a list of URL objects
-	 * ordered from most recently visited to least recently visited (including the
-	 * "current" page visited)
+	 * @return a history of URLs visited, as a list of URL objects ordered from most
+	 *         recently visited to least recently visited (including the "current"
+	 *         page visited)
 	 */
 	public SinglyLinkedList<URL> history() {
 		SinglyLinkedList<URL> tempListHistory = new SinglyLinkedList<>();
 		SinglyLinkedList<URL> returnListHistory = new SinglyLinkedList<>();
-		
-		//pops whole backHistory, reversing order
-		while(backHistory.size() != 0) 
+
+		// pops whole backHistory, reversing order
+		while (backHistory.size() != 0)
 			tempListHistory.insertFirst(backHistory.pop());
-		
-		//pops whole tempListHistory, restoring order to rebuild history
-		//and return correct order history
-		for(URL tempURL : tempListHistory) {
+
+		// pops whole tempListHistory, restoring order to rebuild history
+		// and return correct order history
+		for (URL tempURL : tempListHistory) {
 			backHistory.push(tempURL);
 			returnListHistory.insertFirst(tempURL);
 		}
-		
+
 		if (currentURL != null)
 			returnListHistory.insertFirst(currentURL);
-		
-		return returnListHistory;
 
+		return returnListHistory;
 	}
 }
