@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
  * A LinkedListStack for generic type that implements Stack.
  * 
  * @author Paul Nuffer, Nils Streedain
- * @version March 11, 2021
+ * @version March 3, 2021
  *
  * @param <E> the type of elements contained in this LinkedListStack
  */
