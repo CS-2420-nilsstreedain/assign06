@@ -58,7 +58,10 @@ public class WebBrowser {
 	 * @throws NoSuchElementException if there is no previously-visited URL
 	 */
 	public URL back() throws NoSuchElementException {
-		return backHistory.pop();
+		URL url = backHistory.pop();
+		forwardHistory.push(url);
+		
+		return url;
 
 	}
 
@@ -70,8 +73,10 @@ public class WebBrowser {
 	 * @throws NoSuchElementException
 	 */
 	public URL forward() throws NoSuchElementException {
-		return forwardHistory.pop();
-
+		URL url = forwardHistory.pop();
+		backHistory.push(url);
+		
+		return url;
 	}
 
 	/**
