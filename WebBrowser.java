@@ -63,10 +63,10 @@ public class WebBrowser {
 	 */
 	public URL back() throws NoSuchElementException {
 		URL prevURL = backHistory.pop();
-		forwardHistory.push(prevURL);
+		forwardHistory.push(currentURL);
 		currentURL = prevURL;
 		
-		return prevURL;
+		return currentURL;
 
 	}
 
@@ -78,10 +78,11 @@ public class WebBrowser {
 	 * @throws NoSuchElementException
 	 */
 	public URL forward() throws NoSuchElementException {
-		URL url = forwardHistory.pop();
-		backHistory.push(url);
+		URL forwardURL = forwardHistory.pop();
+		backHistory.push(currentURL);
+		currentURL = forwardURL;
 		
-		return url;
+		return currentURL;
 	}
 
 	/**
