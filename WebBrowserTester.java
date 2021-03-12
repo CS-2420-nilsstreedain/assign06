@@ -97,7 +97,121 @@ class WebBrowserTester {
 	}
 	
 	@Test
-	void testCreateUrlFromHistory() {
+	void visitSingleBrowser() {
+		try {
+			singleURLWebBrowser.visit(new URL("https://www.result.com/"));
+			singleURLWebBrowser.visit(new URL("https://www.tester.com/"));
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+		assertEquals("https://www.result.com/", singleURLWebBrowser.back().toString());
+	}
+	
+	@Test
+	void visitSmallBrowser() {
+		try {
+			smallWebBrowser.visit(new URL("https://www.result.com/"));
+			smallWebBrowser.visit(new URL("https://www.tester.com/"));
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+		assertEquals("https://www.result.com/", smallWebBrowser.back().toString());
+	}
+	
+	@Test
+	void visitLargeBrowser() {
+		try {
+			largeWebBrowser.visit(new URL("https://www.result.com/"));
+			largeWebBrowser.visit(new URL("https://www.tester.com/"));
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+		assertEquals("https://www.result.com/", largeWebBrowser.back().toString());
+	}
+	
+//back() Tests
+	@Test
+	void backEmptyBrowser() {
+		assertThrows(NoSuchElementException.class, () -> {
+			 emptyWebBrowser.back();
+		});
+	}
+	
+	@Test
+	void backSingleBrowser() {
+		assertThrows(NoSuchElementException.class, () -> {
+			 singleURLWebBrowser.back();
+		});
+	}
+	
+	@Test
+	void backSmallBrowser() {
+		assertEquals("https://www.url3.com/", smallWebBrowser.back().toString());
+	}
+	
+//forward() Tests
+	@Test
+	void forwardEmptyBrowser() {
+		assertThrows(NoSuchElementException.class, () -> {
+			 emptyWebBrowser.forward();
+		});
+	}
+	
+	@Test
+	void forwardSingleBrowser() {
+		assertThrows(NoSuchElementException.class, () -> {
+			 singleURLWebBrowser.forward();
+		});
+	}
+	
+	@Test
+	void forwardSmallBrowser() {
+		smallWebBrowser.back();
+		assertEquals("https://www.url4.com/", smallWebBrowser.forward().toString());
+	}
+	
+	@Test
+	void forwardSeveralSmallBrowser() {
+		smallWebBrowser.back();
+		smallWebBrowser.back();
+		smallWebBrowser.back();
+		assertEquals("https://www.url2.com/", smallWebBrowser.forward().toString());
+		assertEquals("https://www.url3.com/", smallWebBrowser.forward().toString());
+		smallWebBrowser.back();
+		smallWebBrowser.back();
+		assertEquals("https://www.url2.com/", smallWebBrowser.forward().toString());
+		smallWebBrowser.back();
+		smallWebBrowser.back();
+		assertEquals("https://www.url1.com/", smallWebBrowser.forward().toString());
+		assertEquals("https://www.url2.com/", smallWebBrowser.forward().toString());
+		assertEquals("https://www.url3.com/", smallWebBrowser.forward().toString());
+		assertEquals("https://www.url4.com/", smallWebBrowser.forward().toString());
+	}
+	
+	@Test
+	void forwardSeveralWithVisitSmallBrowser() {
+		smallWebBrowser.back();
+		smallWebBrowser.back();
+		try {
+			smallWebBrowser.visit(new URL("https://www.result.com/"));
+			smallWebBrowser.visit(new URL("https://www.tester.com/"));
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+		smallWebBrowser.back();
+		smallWebBrowser.back();
+		smallWebBrowser.back();
+		assertEquals("https://www.url2.com/", smallWebBrowser.forward().toString());
+		assertEquals("https://www.result.com/", smallWebBrowser.forward().toString());
+		assertEquals("https://www.tester.com/", smallWebBrowser.forward().toString());
+
+		
+	}
+	
+
+	
+	@Test
+	void testCreateBrowserFromHistory() {
 		SinglyLinkedList<URL> history = new SinglyLinkedList<>();
 		try {
 			history.insertFirst(new URL("https://www.0.com/"));
@@ -108,11 +222,7 @@ class WebBrowserTester {
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
-		
-		for (URL temp : history) 
-			System.out.println(temp.toString());
 		WebBrowser browser = new WebBrowser(history);
-		
 		assertArrayEquals(history.toArray(), browser.history().toArray());
 	}
 
