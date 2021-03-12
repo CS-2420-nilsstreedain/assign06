@@ -7,6 +7,7 @@ public class WebBrowser {
 	
 	private ArrayStack<URL> backHistory;
 	private ArrayStack<URL> forwardHistory;
+	private URL currentURL;
 
 	/**
 	 * This constructor creates a new web browser with no previously-visited
@@ -15,7 +16,7 @@ public class WebBrowser {
 	public WebBrowser() {
 		backHistory = new ArrayStack<>();
 		forwardHistory = new ArrayStack<>();
-
+		currentURL = null;
 	}
 
 	/**
@@ -35,6 +36,7 @@ public class WebBrowser {
 			forwardHistory.push(temp);
 		while(forwardHistory.peek() != null)
 			backHistory.push(forwardHistory.pop());
+		currentURL = backHistory.pop();
 	}
 
 	/**
@@ -45,8 +47,10 @@ public class WebBrowser {
 	 * @param webpage - the url of the webpage to 'visit'
 	 */
 	public void visit(URL webpage) {
-			backHistory.push(webpage);
-			forwardHistory.clear();
+		if (currentURL != null) 
+			backHistory.push(currentURL);
+		currentURL = webpage;
+		forwardHistory.clear();
 	}
 
 	/**
@@ -58,10 +62,11 @@ public class WebBrowser {
 	 * @throws NoSuchElementException if there is no previously-visited URL
 	 */
 	public URL back() throws NoSuchElementException {
-		URL url = backHistory.pop();
-		forwardHistory.push(url);
+		URL prevURL = backHistory.pop();
+		forwardHistory.push(prevURL);
+		currentURL = prevURL;
 		
-		return url;
+		return prevURL;
 
 	}
 

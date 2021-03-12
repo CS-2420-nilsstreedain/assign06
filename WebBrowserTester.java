@@ -87,11 +87,17 @@ class WebBrowserTester {
 	void visitEmptyBrowser() {
 		try {
 			emptyWebBrowser.visit(new URL("https://www.nilsstreedain.com/"));
+			emptyWebBrowser.visit(new URL("https://www.craig.com/"));
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
 		
 		assertEquals("https://www.nilsstreedain.com/", emptyWebBrowser.back().toString());
+	}
+	
+	@Test
+	void otherTest() {
+		
 	}
 
 }
