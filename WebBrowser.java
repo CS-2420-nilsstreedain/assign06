@@ -34,7 +34,7 @@ public class WebBrowser {
 		forwardHistory = new ArrayStack<>();
 		for(URL temp : history)
 			forwardHistory.push(temp);
-		while(forwardHistory.peek() != null)
+		while(forwardHistory.size() != 0)
 			backHistory.push(forwardHistory.pop());
 		currentURL = backHistory.pop();
 	}
@@ -101,7 +101,7 @@ public class WebBrowser {
 		SinglyLinkedList<URL> returnListHistory = new SinglyLinkedList<>();
 		
 		//pops whole backHistory, reversing order
-		while(backHistory.peek() != null) 
+		while(backHistory.size() != 0) 
 			tempListHistory.insertFirst(backHistory.pop());
 		
 		//pops whole tempListHistory, restoring order to rebuild history
@@ -110,6 +110,7 @@ public class WebBrowser {
 			backHistory.push(tempURL);
 			returnListHistory.insertFirst(tempURL);
 		}
+		returnListHistory.insertFirst(currentURL);
 		return returnListHistory;
 
 	}

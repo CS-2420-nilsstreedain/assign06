@@ -1,5 +1,6 @@
 package assign06;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -96,8 +97,23 @@ class WebBrowserTester {
 	}
 	
 	@Test
-	void otherTest() {
+	void testCreateUrlFromHistory() {
+		SinglyLinkedList<URL> history = new SinglyLinkedList<>();
+		try {
+			history.insertFirst(new URL("https://www.0.com/"));
+			history.insertFirst(new URL("https://www.1.com/"));
+			history.insertFirst(new URL("https://www.2.com/"));
+			history.insertFirst(new URL("https://www.3.com/"));
+			history.insertFirst(new URL("https://www.4.com/"));
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
 		
+		for (URL temp : history) 
+			System.out.println(temp.toString());
+		WebBrowser browser = new WebBrowser(history);
+		
+		assertArrayEquals(history.toArray(), browser.history().toArray());
 	}
 
 }
