@@ -110,7 +110,10 @@ public class WebBrowser {
 			backHistory.push(tempURL);
 			returnListHistory.insertFirst(tempURL);
 		}
-		returnListHistory.insertFirst(currentURL);
+		
+		if (currentURL != null)
+			returnListHistory.insertFirst(currentURL);
+		
 		return returnListHistory;
 
 	}
